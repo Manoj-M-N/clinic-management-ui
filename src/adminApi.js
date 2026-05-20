@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const adminApi = axios.create({
-  baseURL: "https://clinic-backend.onrender.com",
+  baseURL: "https://clinic-backend-yw16.onrender.com",
 });
 
 adminApi.interceptors.request.use((config) => {
