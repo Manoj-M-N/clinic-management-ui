@@ -10,6 +10,7 @@ export default function ConsultationForm() {
   const navigate = useNavigate();
   const location = useLocation();
 
+  const [medicines, setMedicines] =useState([]);
   const [medicalHistory, setMedicalHistory] = useState(null);
   // 🔥 appointment passed from dashboard
   const appointment = location.state?.appointment;
@@ -77,70 +78,68 @@ export default function ConsultationForm() {
   // ✅ SAVE CONSULTATION
   const handleSubmit = async (e) => {
 
-    e.preventDefault();
+  e.preventDefault();
 
-    try {
+  try {
 
-      // 🔥 SAVE CONSULTATION
-      const consultationRes = await doctorApi.post(
-        "/consultation",
-        {
-          appointment: {
-            appointmentId: appointment.appointmentId,
-          },
+    // ================= CONSULTATION DATA =================
 
-          symptoms: form.symptoms,
-          diagnosis: form.diagnosis,
-          notes: form.notes,
-          bloodPressure: form.bloodPressure,
-          temperature: form.temperature,
-          pulse: form.pulse,
-        }
-      );
+    const consultationData = {
 
-      const consultationId =
-        consultationRes.data.consultationId;
+      appointment: {
+        appointmentId:
+          appointment.appointmentId,
+      },
 
-      // 🔥 SAVE PRESCRIPTIONS
-      for (const p of prescriptions) {
+      symptoms: form.symptoms,
 
-        await doctorApi.post("/prescription", {
-          consultation: {
-            consultationId,
-          },
+      diagnosis: form.diagnosis,
 
-          medicineName: p.medicineName,
-          dosage: p.dosage,
-          timing: p.timing,
-          days: p.days,
-          notes: p.notes,
-        });
+      notes: form.notes,
+
+      bloodPressure:
+        form.bloodPressure,
+
+      temperature:
+        form.temperature,
+
+      pulse: form.pulse,
+    };
+
+    // ================= SAVE CONSULTATION + PRESCRIPTION =================
+
+    await doctorApi.post(
+      "/consultation",
+      {
+
+        consultation:
+          consultationData,
+
+        prescriptions:
+          prescriptions,
+
       }
-
-      // 🔥 COMPLETE APPOINTMENT
-      await doctorApi.put(
-        `/appointment/complete/${appointment.appointmentId}`
-      );
-
-      alert("Consultation Saved ✅");
-
-      navigate("/doctordashboard");
-
-    } catch (err) {
-
-      console.error(err);
-
-      alert("Failed ❌");
-    }
-  };
-
-  if (!appointment) {
-    return (
-      <div className="p-10 text-red-500">
-        Appointment data missing
-      </div>
     );
+
+    // ================= COMPLETE APPOINTMENT =================
+
+    await doctorApi.put(
+      `/appointment/complete/${appointment.appointmentId}`
+    );
+
+    alert(
+      "Consultation Saved Successfully ✅"
+    );
+
+    navigate("/doctordashboard");
+
+  } catch (err) {
+
+    console.error(err);
+
+    alert("Failed ❌");
   }
+};
 
   useEffect(() => {
 
@@ -174,6 +173,24 @@ export default function ConsultationForm() {
   loadMedicalHistory();
 
 }, []);
+
+const loadMedicines = async () => {
+
+  try {
+
+    const res = await doctorApi.get(
+      "/medicine"
+    );
+
+    setMedicines(res.data);
+
+  } catch (err) {
+
+    console.error(err);
+
+  }
+};
+
   return (
 
     <div className="min-h-screen bg-gray-100 p-6">
@@ -551,20 +568,38 @@ export default function ConsultationForm() {
 
               <div className="grid grid-cols-2 gap-4">
 
-                <input
-                  type="text"
-                  placeholder="Medicine Name"
-                  value={p.medicineName}
-                  onChange={(e) =>
-                    handlePrescriptionChange(
-                      index,
-                      "medicineName",
-                      e.target.value
-                    )
-                  }
-                  className="border rounded-lg p-3"
-                  required
-                />
+                <select
+  value={p.medicineName}
+  onChange={(e) =>
+    handlePrescriptionChange(
+      index,
+      "medicineName",
+      e.target.value
+    )
+  }
+  className="border rounded-lg p-3"
+  required
+>
+
+  <option value="">
+    Select Medicine
+  </option>
+
+  {medicines.map((m) => (
+
+    <option
+      key={m.medicineId}
+      value={m.medicineName}
+    >
+      {m.medicineName}
+      {" "}
+      (Stock:
+      {m.stockQuantity})
+    </option>
+
+  ))}
+
+</select>
 
                 <input
                   type="text"
