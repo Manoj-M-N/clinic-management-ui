@@ -20,6 +20,10 @@ import PatientMedicalHistoryForm from "./pages/doctor/PatientMedicalHistoryForm"
 import PatientEMR from "./pages/doctor/PatientEMR";
 import AddDoctor from "./pages/admin/AddDoctor";
 
+import MedicineList from "./pages/admin/MedicineList";
+import AddMedicine from "./pages/admin/AddMedicine";
+import EditMedicine from "./pages/admin/EditMedicine";
+
 function App() {
   return (
     <BrowserRouter>
@@ -105,6 +109,22 @@ function App() {
   path="/doctor/emr"
   element={<PatientEMR />}
 />
+
+<Route
+  path="medicines"
+  element={<MedicineList />}
+/>
+
+<Route
+  path="add-medicine"
+  element={<AddMedicine />}
+/>
+
+<Route
+  path="edit-medicine/:id"
+  element={<EditMedicine />}
+/>
+
       </Routes>
     </BrowserRouter>
   );

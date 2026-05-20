@@ -142,6 +142,50 @@ createDoctor: async (data) => {
   return res.data;
 },
 
+// ================= MEDICINE =================
+
+createMedicine: async (data) => {
+  const res = await adminApi.post(
+    "/medicine",
+    data
+  );
+
+  return res.data;
+},
+
+getMedicines: async () => {
+  const res = await adminApi.get(
+    "/medicine"
+  );
+
+  return res.data;
+},
+
+getMedicineById: async (id) => {
+  const res = await adminApi.get(
+    `/medicine/${id}`
+  );
+
+  return res.data;
+},
+
+updateMedicine: async (id, data) => {
+  const res = await adminApi.put(
+    `/medicine/${id}`,
+    data
+  );
+
+  return res.data;
+},
+
+deleteMedicine: async (id) => {
+  const res = await adminApi.delete(
+    `/medicine/${id}`
+  );
+
+  return res.data;
+},
+
 };
 
 export const saveMedicalHistory = async (data) => {

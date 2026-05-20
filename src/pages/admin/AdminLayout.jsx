@@ -65,6 +65,13 @@ export default function AdminLayout() {
             ➕ Book Appointment
           </Link>
 
+          <Link
+  to="/admin/medicines"
+  className="block px-4 py-3 rounded-xl hover:bg-blue-600 transition"
+>
+  💊 Medicines
+</Link>
+
         </nav>
 
         {/* LOGOUT */}
