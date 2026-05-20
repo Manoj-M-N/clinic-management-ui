@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const doctorApi = axios.create({
-  baseURL: "http://localhost:1234",
+  baseURL: "https://clinic-backend.onrender.com",
 });
 
 // 🔥 ADD THIS INTERCEPTOR

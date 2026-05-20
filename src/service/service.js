@@ -149,7 +149,7 @@ export const saveMedicalHistory = async (data) => {
   const token = localStorage.getItem("doctorToken");
 
   const res = await axios.post(
-    "http://localhost:1234/medical-history",
+    "https://clinic-backend.onrender.com/medical-history",
     data,
     {
       headers: {
