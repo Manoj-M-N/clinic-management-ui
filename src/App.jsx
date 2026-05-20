@@ -79,6 +79,23 @@ function App() {
     element={<EditDoctor />}
   />
 
+  {/* ✅ MEDICINES */}
+
+  <Route
+    path="medicines"
+    element={<MedicineList />}
+  />
+
+  <Route
+    path="add-medicine"
+    element={<AddMedicine />}
+  />
+
+  <Route
+    path="edit-medicine/:id"
+    element={<EditMedicine />}
+  />
+
 </Route>
 
         {/* DOCTOR */}
@@ -110,20 +127,6 @@ function App() {
   element={<PatientEMR />}
 />
 
-<Route
-  path="medicines"
-  element={<MedicineList />}
-/>
-
-<Route
-  path="add-medicine"
-  element={<AddMedicine />}
-/>
-
-<Route
-  path="edit-medicine/:id"
-  element={<EditMedicine />}
-/>
 
       </Routes>
     </BrowserRouter>
