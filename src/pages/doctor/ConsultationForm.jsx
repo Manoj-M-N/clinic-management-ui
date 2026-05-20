@@ -174,22 +174,30 @@ export default function ConsultationForm() {
 
 }, []);
 
-const loadMedicines = async () => {
+useEffect(() => {
 
-  try {
+  const loadMedicines = async () => {
 
-    const res = await doctorApi.get(
-      "/medicine"
-    );
+    try {
 
-    setMedicines(res.data);
+      const res = await doctorApi.get(
+        "/medicine"
+      );
 
-  } catch (err) {
+      console.log("Medicines API:", res.data);
 
-    console.error(err);
+      setMedicines(res.data);
 
-  }
-};
+    } catch (err) {
+
+      console.error("Medicine API Error:", err);
+
+    }
+  };
+
+  loadMedicines();
+
+}, []);
 
   return (
 
@@ -568,7 +576,7 @@ const loadMedicines = async () => {
 
               <div className="grid grid-cols-2 gap-4">
 
-                <select
+               <select
   value={p.medicineName}
   onChange={(e) =>
     handlePrescriptionChange(
@@ -585,16 +593,13 @@ const loadMedicines = async () => {
     Select Medicine
   </option>
 
-  {medicines.map((m) => (
+  {medicines.map((medicine) => (
 
     <option
-      key={m.medicineId}
-      value={m.medicineName}
+      key={medicine.medicineId}
+      value={medicine.medicineName}
     >
-      {m.medicineName}
-      {" "}
-      (Stock:
-      {m.stockQuantity})
+      {medicine.medicineName}
     </option>
 
   ))}
