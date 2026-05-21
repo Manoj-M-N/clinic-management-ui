@@ -23,6 +23,7 @@ import AddDoctor from "./pages/admin/AddDoctor";
 import MedicineList from "./pages/admin/MedicineList";
 import AddMedicine from "./pages/admin/AddMedicine";
 import EditMedicine from "./pages/admin/EditMedicine";
+import PharmacyDashboard from "./pages/admin/PharmacyDashboard";
 
 function App() {
   return (
@@ -95,6 +96,11 @@ function App() {
     path="edit-medicine/:id"
     element={<EditMedicine />}
   />
+
+<Route
+  path="/admin/pharmacy"
+  element={<PharmacyDashboard />}
+/>
 
 </Route>
 

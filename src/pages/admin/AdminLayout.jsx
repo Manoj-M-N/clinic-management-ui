@@ -72,6 +72,13 @@ export default function AdminLayout() {
   💊 Medicines
 </Link>
 
+<Link
+  to="/admin/pharmacy"
+  className="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-gray-800 transition"
+>
+  💊 Pharmacy
+</Link>
+
         </nav>
 
         {/* LOGOUT */}
